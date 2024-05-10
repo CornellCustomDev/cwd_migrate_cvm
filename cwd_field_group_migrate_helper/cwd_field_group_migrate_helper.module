@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Field group migrate helper module.
+ *
+ * Thank you to Kevin Quillen for this solution!
+ * https://www.drupal.org/project/field_group/issues/3073546
+ * https://kevinquillen.com/migrating-field-groups-features-drupal-7-drupal-9
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Database\Connection;
+
+/**
+ * Implements hook_install().
+ *
+ * This will scan the old features directory for field_group.inc files. From
+ * there we can recreate the structure and insert them into the legacy database.
+ *
+ * After that, we can run the migration from the UI.
+ */
+function cwd_field_group_migrate_helper_install() {
+  $connection = \Drupal\Core\Database\Database::getConnection('default', 'migrate');
+
+  $path = DRUPAL_ROOT . '/modules/custom_cvm/d7_features';
+  $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+
+  $files = array_filter(iterator_to_array($iterator), function($file) {
+    return preg_match('/(.*)\.field_group\.inc/i', $file->getFilename()) ? $file->isFile() : FALSE;
+  });
+
+  foreach ($files as $file) {
+    $filename = $file->getFilename();
+    $function_name = str_replace('.inc', '_info', $filename);
+    $function_name = str_replace('.field_group', '_field_group', $function_name);
+
+    // Need to require the .inc file so the function can be called.
+    require $file->getPathname();
+
+    $groups = $function_name();
+
+    foreach ($groups as $group) {
+      $connection->merge('field_group')
+        ->key(['identifier' => $group->identifier])
+        ->fields([
+          'identifier' => $group->identifier,
+          'group_name' => $group->group_name,
+          'entity_type' => $group->entity_type,
+          'bundle' => $group->bundle,
+          'mode' => $group->mode,
+          'parent_name' => $group->parent_name,
+          'data' => serialize($group->data)
+        ])
+        ->execute();
+    }
+  }
+}

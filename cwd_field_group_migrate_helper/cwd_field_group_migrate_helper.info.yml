@@ -1,0 +1,7 @@
+name: 'Field group migrate helper'
+type: module
+description: 'Because feature-ized field groups aren&#039;t in the database, and therefore don&#039;t get migrated.'
+package: Custom
+core_version_requirement: ^10
+dependencies:
+  - field_group:field_group

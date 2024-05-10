@@ -4,6 +4,11 @@ Upgrade / Migrate the Vet School website from Drupal 7 to Drupal 10.
 
 P.S. If I could start over, I would put the migration configs in modules/custom_cvm/cwd_migrate_cvm, not modules/custom_cvm/cwd_migrate_cvm/config/install 🤦‍♀️  OH WELL!
 
+P.P.S. The cwd_field_group_migrate_helper module is a totally separate custom module, but we used it for this migration, and it didn't seem worth it to create ANOTHER repo.
+* Giant hat-tip to Kevin Quillen for this solution!<br>
+  https://kevinquillen.com/migrating-field-groups-features-drupal-7-drupal-9<br>
+  https://www.drupal.org/project/field_group/issues/3073546
+
 ## Getting started
 
 See also: That Google doc I created during October 2023 prep / proof of concept (not putting a link here because idr if I put anything sensitive in it; worry about it later; if you know, you know).
