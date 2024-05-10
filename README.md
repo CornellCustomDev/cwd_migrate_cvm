@@ -30,6 +30,9 @@ To import something with a "source ID" that has multiple parts, separate each pa
 lando drush mim upgrade_d7_field_formatter_settings --idlist=node:portfolio_project:teaser:field_ess_type
 ```
 
+### Semi-final / final migration commands
+See ... you guessed it: [final migration commands](final-migration-commands.md).
+
 ### Generate / update migrations
 ```
 lando drush migrate-upgrade --legacy-db-url=mysql://pantheon:pantheon@database.cucvm.internal/pantheon --configure-only
