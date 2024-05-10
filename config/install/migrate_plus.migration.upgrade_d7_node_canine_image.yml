@@ -1,0 +1,139 @@
+uuid: 7b629dc0-6f6c-4443-a14d-282dd53c53e5
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_canine_image
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_nodes
+label: 'Nodes ([atlas] Canine Image)'
+source:
+  plugin: d7_node
+  node_type: canine_image
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_canine_image/0/status:
+    -
+      plugin: get
+      source: comment
+  field_embryo:
+    -
+      plugin: sub_process
+      source: field_embryo
+      process:
+        target_id: tid
+  field_histology:
+    -
+      plugin: get
+      source: field_histology
+  field_image:
+    -
+      plugin: sub_process
+      source: field_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_part:
+    -
+      plugin: sub_process
+      source: field_part
+      process:
+        target_id: tid
+  field_rna_sequenced:
+    -
+      plugin: get
+      source: field_rna_sequenced
+  field_original_image:
+    -
+      plugin: sub_process
+      source: field_original_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_keywords:
+    -
+      plugin: get
+      source: field_keywords
+  field_thumb_organs:
+    -
+      plugin: get
+      source: field_thumb_organs
+  field_thumb_stage:
+    -
+      plugin: get
+      source: field_thumb_stage
+  field_order:
+    -
+      plugin: get
+      source: field_order
+  field_rna_url:
+    -
+      plugin: field_link
+      source: field_rna_url
+destination:
+  plugin: 'entity:node'
+  default_bundle: canine_image
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance

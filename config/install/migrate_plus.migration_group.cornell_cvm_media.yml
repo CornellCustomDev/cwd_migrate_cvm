@@ -1,0 +1,19 @@
+uuid: 54b188d8-6347-49ce-8333-a606724495b4
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - cornell_cvm
+      - migrate_drupal
+      - migrate_plus
+      - migrate_tools
+      - migrate_file_to_media
+id: cornell_cvm_media
+label: 'Files and media migrations'
+description: 'Importing files and converting to media.'
+source_type: 'Drupal 7'
+module: null
+shared_configuration:
+  source:
+    key: migrate

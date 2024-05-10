@@ -1,0 +1,19 @@
+-
+  plugin: skip_on_empty
+  method: process
+-
+  plugin: dom
+  method: import
+  import_method: 'html5'
+-
+  plugin: dom_str_replace
+  mode: attribute
+  xpath: //a
+  attribute_options:
+    name: href
+  regex: true
+  search: '/^[^\/]*(node\/\d+)$/'
+  replace: '/$1'
+-
+  plugin: dom
+  method: export

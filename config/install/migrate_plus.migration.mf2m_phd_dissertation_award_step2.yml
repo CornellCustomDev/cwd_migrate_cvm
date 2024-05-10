@@ -1,0 +1,34 @@
+# This migration links the newly created media entities with entity reference field on the target bundle.
+uuid: 7d849450-8da7-4017-8c57-cddb1cb6702c
+langcode: en
+status: true
+dependencies: {  }
+id: mf2m_phd_dissertation_award_step2
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: cornell_cvm_media
+label: 'Media entity mapping: phd_dissertation_award content type'
+source:
+  plugin: 'media_content_entity:node'
+  bundle: phd_dissertation_award
+  include_revisions: false
+  include_translations: false
+  fields_not_empty:
+    - field_student_image
+process:
+  nid: nid
+  type:
+    plugin: default_value
+    default_value: phd_dissertation_award
+  field_student_image_media:
+    plugin: file_id_lookup
+    source: field_student_image
+    migration: mf2m_phd_dissertation_award_step1
+    no_stub: true
+destination:
+  plugin: 'entity:node'
+migration_dependencies:
+  optional:
+    - mf2m_phd_dissertation_award_step1

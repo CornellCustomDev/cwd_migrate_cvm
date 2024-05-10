@@ -1,0 +1,191 @@
+uuid: 077e88e2-3921-41d3-aa7f-28b9bd48dc8c
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_service
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_nodes
+label: 'Nodes (Services)'
+source:
+  plugin: d7_node
+  node_type: service
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_service/0/status:
+    -
+      plugin: get
+      source: comment
+  field_diagnosis:
+    -
+      plugin: sub_process
+      source: field_diagnosis
+      process:
+        target_id: tid
+  field_emergency_phone:
+    -
+      plugin: get
+      source: field_emergency_phone
+  field_featured:
+    -
+      plugin: get
+      source: field_featured
+  field_hospital:
+    -
+      plugin: sub_process
+      source: field_hospital
+      process:
+        target_id: tid
+  field_image:
+    -
+      plugin: sub_process
+      source: field_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_link:
+    -
+      plugin: field_link
+      source: field_link
+  field_location_other:
+    -
+      plugin: get
+      source: field_location_other
+  field_locked_for_migration:
+    -
+      plugin: sub_process
+      source: field_locked_for_migration
+      process:
+        target_id: tid
+  field_phone:
+    -
+      plugin: get
+      source: field_phone
+  field_service_area:
+    -
+      plugin: sub_process
+      source: field_service_area
+      process:
+        target_id: tid
+  field_species:
+    -
+      plugin: sub_process
+      source: field_species
+      process:
+        target_id: tid
+  field_make_an_appointment/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_make_an_appointment/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_make_an_appointment/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_make_an_appointment/0/format
+  field_more_information/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_more_information/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_more_information/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_more_information/0/format
+  field_contact_form:
+    -
+      plugin: field_link
+      source: field_contact_form
+destination:
+  plugin: 'entity:node'
+  default_bundle: service
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance

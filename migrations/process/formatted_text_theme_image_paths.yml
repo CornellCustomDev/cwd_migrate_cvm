@@ -1,0 +1,19 @@
+-
+  plugin: skip_on_empty
+  method: process
+-
+  plugin: dom
+  method: import
+  import_method: 'html5'
+-
+  plugin: dom_str_replace
+  mode: attribute
+  xpath: //img
+  attribute_options:
+    name: src
+  regex: true
+  search: '/\/sites\/all\/themes\/cornell_cvm\//'
+  replace: '/themes/custom/cornell_cvm/'
+-
+  plugin: dom
+  method: export

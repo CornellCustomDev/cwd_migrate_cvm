@@ -1,0 +1,34 @@
+# This migration links the newly created media entities with entity reference field on the target bundle.
+uuid: 9eb71152-a23e-45f7-a9f1-6e0ff9732fc0
+langcode: en
+status: true
+dependencies: {  }
+id: mf2m_vocab_canine_stages_step2
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: cornell_cvm_media
+label: 'Media entity mapping: canine_stages vocab'
+source:
+  plugin: 'media_content_entity:taxonomy_term'
+  bundle: canine_stages
+  include_revisions: false
+  include_translations: false
+  fields_not_empty:
+    - field_image
+process:
+  tid: tid
+  type:
+    plugin: default_value
+    default_value: canine_stages
+  field_image_media:
+    plugin: file_id_lookup
+    source: field_image
+    migration: mf2m_vocab_canine_stages_step1
+    no_stub: true
+destination:
+  plugin: 'entity:taxonomy_term'
+migration_dependencies:
+  optional:
+    - mf2m_vocab_canine_stages_step1

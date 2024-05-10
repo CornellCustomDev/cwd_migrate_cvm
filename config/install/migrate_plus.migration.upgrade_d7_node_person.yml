@@ -1,0 +1,181 @@
+uuid: 9e40c5e0-533b-49ac-9f67-3f3ab59bd441
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_person
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_unused
+label: 'Nodes (Person)'
+source:
+  plugin: d7_node
+  node_type: person
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  vid:
+    -
+      plugin: get
+      source: vid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_person/0/status:
+    -
+      plugin: get
+      source: comment
+  field_bio_url:
+    -
+      plugin: field_link
+      source: field_bio_url
+  field_last_name:
+    -
+      plugin: get
+      source: field_last_name
+  field_netid:
+    -
+      plugin: get
+      source: field_netid
+  field_person_email:
+    -
+      plugin: get
+      source: field_person_email
+  field_person_image:
+    -
+      plugin: sub_process
+      source: field_person_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_person_job:
+    -
+      plugin: sub_process
+      source: field_person_job
+      process:
+        target_id:
+          -
+            plugin: paragraphs_lookup
+            tags: 'Field Collection Content'
+            source: value
+          -
+            plugin: extract
+            index:
+              - id
+        target_revision_id:
+          -
+            plugin: paragraphs_lookup
+            tags:
+              - 'Field Collection Revisions Content'
+              - 'Field Collection Content'
+            tag_ids:
+              'Field Collection Revisions Content':
+                - revision_id
+              'Field Collection Content':
+                - value
+          -
+            plugin: extract
+            index:
+              - revision_id
+  field_person_keywords:
+    -
+      plugin: sub_process
+      source: field_person_keywords
+      process:
+        target_id: tid
+  field_person_phone:
+    -
+      plugin: get
+      source: field_person_phone
+  field_research_area:
+    -
+      plugin: sub_process
+      source: field_research_area
+      process:
+        target_id: tid
+  field_service_area:
+    -
+      plugin: sub_process
+      source: field_service_area
+      process:
+        target_id: tid
+  field_location:
+    -
+      plugin: get
+      source: field_location
+  field_location_person_secondary:
+    -
+      plugin: get
+      source: field_location_person_secondary
+  field_hospital:
+    -
+      plugin: sub_process
+      source: field_hospital
+      process:
+        target_id: tid
+  field_locked_for_migration:
+    -
+      plugin: sub_process
+      source: field_locked_for_migration
+      process:
+        target_id: tid
+destination:
+  plugin: 'entity:node'
+  default_bundle: person
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+    - upgrade_d7_field_collection_person_job
+  optional:
+    - upgrade_d7_field_instance

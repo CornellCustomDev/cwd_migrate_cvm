@@ -1,0 +1,419 @@
+uuid: e89a9588-cb2d-424e-8249-8ed7f4d6eff6
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_page
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_nodes
+label: 'Nodes (Basic page)'
+source:
+  plugin: d7_node
+  node_type: page
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_page/0/status:
+    -
+      plugin: get
+      source: comment
+  field_banner_image:
+    -
+      plugin: sub_process
+      source: field_banner_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_er_slider:
+    -
+      plugin: get
+      source: field_er_slider
+  field_is_section:
+    -
+      plugin: get
+      source: field_is_section
+  field_show_events:
+    -
+      plugin: get
+      source: field_show_events
+  field_show_events_filter:
+    -
+      plugin: sub_process
+      source: field_show_events_filter
+      process:
+        target_id: tid
+  field_show_news:
+    -
+      plugin: get
+      source: field_show_news
+  field_show_news_filter:
+    -
+      plugin: sub_process
+      source: field_show_news_filter
+      process:
+        target_id: tid
+  field_action_button1:
+    -
+      plugin: field_link
+      source: field_action_button1
+  field_action_button2:
+    -
+      plugin: field_link
+      source: field_action_button2
+  field_supplementary1_content/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_supplementary1_content/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_supplementary1_content/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_supplementary1_content/0/format
+  field_supplementary2_content/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_supplementary2_content/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_supplementary2_content/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_supplementary2_content/0/format
+  field_supplementary_band1:
+    -
+      plugin: get
+      source: field_supplementary_band1
+  field_supplementary_band2:
+    -
+      plugin: get
+      source: field_supplementary_band2
+  field_tagline:
+    -
+      plugin: get
+      source: field_tagline
+  field_textarea_block/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_textarea_block/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_textarea_block/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_textarea_block/0/format
+  field_spotlight_er:
+    -
+      plugin: get
+      source: field_spotlight_er
+  field_show_events_region:
+    -
+      plugin: get
+      source: field_show_events_region
+  field_show_news_region:
+    -
+      plugin: get
+      source: field_show_news_region
+  field_locked_for_migration:
+    -
+      plugin: sub_process
+      source: field_locked_for_migration
+      process:
+        target_id: tid
+  field_compact_college_branding:
+    -
+      plugin: get
+      source: field_compact_college_branding
+  field_gallery:
+    -
+      plugin: get
+      source: field_gallery
+  field_hide_breadcrumb:
+    -
+      plugin: get
+      source: field_hide_breadcrumb
+  field_hide_page_title:
+    -
+      plugin: get
+      source: field_hide_page_title
+  field_hide_section_navigation:
+    -
+      plugin: get
+      source: field_hide_section_navigation
+  field_one_column:
+    -
+      plugin: get
+      source: field_one_column
+  field_section_header_type:
+    -
+      plugin: get
+      source: field_section_header_type
+  field_department:
+    -
+      plugin: sub_process
+      source: field_department
+      process:
+        target_id: tid
+  field_highlights:
+    -
+      plugin: get
+      source: field_highlights
+  field_hospital:
+    -
+      plugin: sub_process
+      source: field_hospital
+      process:
+        target_id: tid
+  field_hospital_footer_content/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_hospital_footer_content/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_hospital_footer_content/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_hospital_footer_content/0/format
+  field_hospital_footer_image:
+    -
+      plugin: sub_process
+      source: field_hospital_footer_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_location_link:
+    -
+      plugin: field_link
+      source: field_location_link
+  field_location_other:
+    -
+      plugin: get
+      source: field_location_other
+  field_main_heading:
+    -
+      plugin: get
+      source: field_main_heading
+  field_secondary_heading:
+    -
+      plugin: get
+      source: field_secondary_heading
+  field_services_band_content/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_services_band_content/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_services_band_content/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_services_band_content/0/format
+  field_services_band_image:
+    -
+      plugin: sub_process
+      source: field_services_band_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_show_extra_hospital_footer:
+    -
+      plugin: get
+      source: field_show_extra_hospital_footer
+  field_show_highlights:
+    -
+      plugin: get
+      source: field_show_highlights
+  field_show_services_band:
+    -
+      plugin: get
+      source: field_show_services_band
+  field_show_unit_campaign:
+    -
+      plugin: get
+      source: field_show_unit_campaign
+  field_unit_action_button1:
+    -
+      plugin: field_link
+      source: field_unit_action_button1
+  field_unit_action_button2:
+    -
+      plugin: field_link
+      source: field_unit_action_button2
+  field_unit_action_button3:
+    -
+      plugin: field_link
+      source: field_unit_action_button3
+  field_unit_campaign_image:
+    -
+      plugin: sub_process
+      source: field_unit_campaign_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_unit_homepage:
+    -
+      plugin: get
+      source: field_unit_homepage
+  field_custom_body_class:
+    -
+      plugin: get
+      source: field_custom_body_class
+  field_unit_campaign_video:
+    -
+      plugin: sub_process
+      source: field_unit_campaign_video
+      process:
+        target_id: fid
+        display: display
+        description: description
+  field_health_info_category:
+    -
+      plugin: sub_process
+      source: field_health_info_category
+      process:
+        target_id: tid
+  field_health_info_related_conten:
+    -
+      plugin: field_link
+      source: field_health_info_related_conten
+destination:
+  plugin: 'entity:node'
+  default_bundle: page
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance

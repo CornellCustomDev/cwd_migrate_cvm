@@ -1,0 +1,145 @@
+uuid: 23448fee-d5f3-4ba0-86ee-ef947e1226da
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node__chc_member
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_nodes
+label: 'Nodes (Member)'
+source:
+  plugin: d7_node
+  node_type: _chc_member
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node__chc_member/0/status:
+    -
+      plugin: get
+      source: comment
+  field_bio/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_bio/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_bio/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_bio/0/format
+  field_chc_member_last_name:
+    -
+      plugin: get
+      source: field_chc_member_last_name
+  field_email_address:
+    -
+      plugin: sub_process
+      source: field_email_address
+      process:
+        value: email
+  field_faculty_page_url:
+    -
+      plugin: field_link
+      source: field_faculty_page_url
+  field_member_category:
+    -
+      plugin: get
+      source: field_member_category
+  field_member_image:
+    -
+      plugin: sub_process
+      source: field_member_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_status:
+    -
+      plugin: get
+      source: field_status
+  field_title:
+    -
+      plugin: get
+      source: field_title
+  field_associated_dept:
+    -
+      plugin: sub_process
+      source: field_associated_dept
+      process:
+        target_id: tid
+destination:
+  plugin: 'entity:node'
+  default_bundle: _chc_member
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance

@@ -1,0 +1,111 @@
+uuid: 84147259-a6fb-45f4-a523-1bc5793f593d
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_ahdc_news_and_announcements
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_nodes
+label: 'Nodes (AHDC News and Announcements)'
+source:
+  plugin: d7_node
+  node_type: ahdc_news_and_announcements
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_ahdc_news_and_announcements/0/status:
+    -
+      plugin: get
+      source: comment
+  field_announcement_date:
+    -
+      plugin: sub_process
+      source: field_announcement_date
+      process:
+        value:
+          plugin: format_date
+          from_format: 'Y-m-d H:i:s'
+          to_format: Y-m-d
+          source: value
+  field_compact_college_branding:
+    -
+      plugin: get
+      source: field_compact_college_branding
+  field_custom_body_class:
+    -
+      plugin: get
+      source: field_custom_body_class
+  field_home_page:
+    -
+      plugin: get
+      source: field_home_page
+  field_locked_for_migration:
+    -
+      plugin: sub_process
+      source: field_locked_for_migration
+      process:
+        target_id: tid
+  field_animal_health_news:
+    -
+      plugin: get
+      source: field_animal_health_news
+destination:
+  plugin: 'entity:node'
+  default_bundle: ahdc_news_and_announcements
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance

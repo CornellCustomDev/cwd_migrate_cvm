@@ -1,0 +1,28 @@
+-
+  plugin: skip_on_empty
+  method: process
+-
+  plugin: dom
+  method: import
+  import_method: 'html5'
+-
+  plugin: dom_str_replace
+  mode: attribute
+  xpath: //a
+  attribute_options:
+    name: href
+  regex: true
+  search: '/https*:\/\/(www2*\.)*vet\.cornell\.edu(\/)*/'
+  replace: /
+-
+  plugin: dom_str_replace
+  mode: attribute
+  xpath: //img
+  attribute_options:
+    name: src
+  regex: true
+  search: '/https*:\/\/(www2*\.)*vet\.cornell\.edu(\/)*/'
+  replace: '/'
+-
+  plugin: dom
+  method: export

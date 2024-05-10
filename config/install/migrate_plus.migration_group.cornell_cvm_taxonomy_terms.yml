@@ -1,0 +1,37 @@
+uuid: d296f022-e10d-4307-9c91-8ce87ab1ef6a
+langcode: en
+status: true
+dependencies: {  }
+id: cornell_cvm_taxonomy_terms
+label: 'Taxonomy term migrations'
+description: 'Shared plugins and configurations for taxonomy terms.'
+source_type: 'Drupal 7'
+module: null
+shared_configuration:
+  source:
+    key: migrate
+  process:
+    description/value:
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_absolute_path_fixes
+        source: description
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_linkit_rel_paths
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_placeholder_alts
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_theme_image_paths
+    description/format:
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_format_mapping
+        source: format

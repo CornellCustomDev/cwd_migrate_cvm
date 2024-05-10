@@ -1,0 +1,52 @@
+# This migration links the newly created media entities with entity reference field on the target bundle.
+uuid: 9431c0f9-6c21-4080-b5fb-c49627411c13
+langcode: en
+status: true
+dependencies: {  }
+id: mf2m_page_step2
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: cornell_cvm_media
+label: 'Media entity mapping: page content type'
+source:
+  plugin: 'media_content_entity:node'
+  bundle: page
+  include_revisions: false
+  include_translations: false
+  fields_not_empty:
+    - field_unit_campaign_image
+    - field_services_band_image
+    - field_hospital_footer_image
+    - field_banner_image
+process:
+  nid: nid
+  type:
+    plugin: default_value
+    default_value: page
+  field_unit_campaign_image_media:
+    plugin: file_id_lookup
+    source: field_unit_campaign_image
+    migration: mf2m_page_step1
+    no_stub: true
+  field_services_band_image_media:
+    plugin: file_id_lookup
+    source: field_services_band_image
+    migration: mf2m_page_step1
+    no_stub: true
+  field_hospital_footer_imag_media:
+    plugin: file_id_lookup
+    source: field_hospital_footer_image
+    migration: mf2m_page_step1
+    no_stub: true
+  field_banner_image_media:
+    plugin: file_id_lookup
+    source: field_banner_image
+    migration: mf2m_page_step1
+    no_stub: true
+destination:
+  plugin: 'entity:node'
+migration_dependencies:
+  optional:
+    - mf2m_page_step1

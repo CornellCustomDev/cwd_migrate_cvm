@@ -1,0 +1,27 @@
+-
+  plugin: skip_on_empty
+  method: process
+-
+  plugin: dom
+  method: import
+  import_method: 'html5'
+-
+  plugin: dom_str_replace
+  mode: attribute
+  xpath: //img
+  attribute_options:
+    name: alt
+  search: 'Name goes here'
+  replace: ''
+-
+  plugin: dom_str_replace
+  mode: attribute
+  xpath: //img
+  attribute_options:
+    name: alt
+  regex: true
+  search: '/^(")+$/'
+  replace: ''
+-
+  plugin: dom
+  method: export

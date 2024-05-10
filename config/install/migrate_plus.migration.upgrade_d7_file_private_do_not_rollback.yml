@@ -1,0 +1,61 @@
+uuid: bd7e0dde-a408-441a-acce-0ae935926fa5
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_file_private_do_not_rollback
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_media
+label: 'Private files - DO NOT ROLL BACK'
+source:
+  plugin: d7_file
+  scheme: private
+  # d7_file is fussy about constants: source_base_path being present, even if
+  # we aren't using it in the process.
+  # https://git.drupalcode.org/project/drupal/-/blob/627361ec887cba5b041671bbde338fa78c410d5b/core/modules/file/src/Plugin/migrate/source/d7/File.php#L105
+  constants:
+    # on pantheon:
+    source_base_path: 'https://migr-stg-cornell-cvm.pantheonsite.io'
+    # on lando:
+    # source_base_path: /app/web
+process:
+  fid:
+    -
+      plugin: get
+      source: fid
+  filename:
+    -
+      plugin: get
+      source: filename
+  # No need for file_copy because we have to rsync private files anyway, just
+  # map uri to uri.
+  uri: uri
+  filemime:
+    -
+      plugin: get
+      source: filemime
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: timestamp
+  changed:
+    -
+      plugin: get
+      source: timestamp
+  uid:
+    -
+      plugin: get
+      source: uid
+destination:
+  plugin: 'entity:file'
+migration_dependencies:
+  required: {  }
+  optional: {  }

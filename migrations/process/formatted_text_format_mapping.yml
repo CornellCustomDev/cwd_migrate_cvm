@@ -1,0 +1,9 @@
+-
+  plugin: static_map
+  map:
+    php_code: html_markup
+    ds_code: html_markup
+    admin_html: html_markup
+    # Because there are too many unknown custom classes:
+    filtered_html: full_html
+  bypass: true

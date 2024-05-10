@@ -1,0 +1,12 @@
+uuid: 388b8392-22c3-4e6e-96cd-1dc92060bfdd
+langcode: en
+status: true
+dependencies: {  }
+id: cornell_cvm
+label: 'Import from Drupal 7'
+description: 'Migrations originally generated from drush migrate-upgrade --configure-only'
+source_type: 'Drupal 7'
+module: null
+shared_configuration:
+  source:
+    key: migrate

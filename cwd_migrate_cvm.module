@@ -1,0 +1,35 @@
+<?php
+use Drupal\migrate\Row;
+use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Plugin\MigrateSourceInterface;
+
+/**
+ * Add D7 file entity field_caption to our source data.
+ * hook_migrate_prepare_row()
+ * https://api.drupal.org/api/drupal/core%21modules%21migrate%21migrate.api.php/function/hook_migrate_prepare_row/8.2.x
+ *
+ * @param Row $row
+ * @param MigrateSourceInterface $source
+ * @param MigrationInterface $migration
+ * @return void
+ */
+function cwd_migrate_cvm_migrate_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  $migration_ids = ['cwd_migrate_cvm_mf2m_canine_image_step1', 'mf2m_ctrial_step1', 'mf2m_news_step1', 'mf2m_page_step1', 'mf2m_phd_dissertation_award_step1', 'mf2m_portfolio_project_step1', 'mf2m_service_step1', 'mf2m_spotlight_step1', 'mf2m__chc_member_step1'];
+  if (in_array($migration->id(), $migration_ids)) {
+    $source = $migration->getSourcePlugin();
+
+    // Get caption field value/format.
+    $captionQuery = $source->getDatabase()->select('field_data_field_caption', 'c')->fields('c', ['field_caption_value', 'field_caption_format']);
+    $captionQuery->condition('entity_type', 'file');
+    $captionQuery->condition('entity_id', $row->getSourceProperty('target_id'));
+    $row->setSourceProperty('caption_value', $captionQuery->execute()->fetchField(0));
+    $row->setSourceProperty('caption_format', $captionQuery->execute()->fetchField((1)));
+
+    // Get alt text field value.
+    $source = $migration->getSourcePlugin();
+    $altQuery = $source->getDatabase()->select('field_data_field_file_image_alt_text', 'a')->fields('a', ['field_file_image_alt_text_value']);
+    $altQuery->condition('entity_type', 'file');
+    $altQuery->condition('entity_id', $row->getSourceProperty('target_id'));
+    $row->setSourceProperty('image_alt', $altQuery->execute()->fetchField(0));
+  }
+}

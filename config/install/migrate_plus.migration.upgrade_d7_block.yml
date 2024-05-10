@@ -1,0 +1,212 @@
+# This migration is Special. See README.md > Special stuff for details.
+uuid: d8365520-53e5-44a3-87ce-556b5f16862a
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_block
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Configuration
+migration_group: cornell_cvm
+label: Blocks
+source:
+  plugin: block
+  conditions:
+    -
+      field: theme
+      value: cornell_cvm
+    -
+      field: module
+      value:
+        - context_ui
+        - crumbs
+        - diff
+        - form_builder
+        - google_cse
+        - menu
+        - menu_block
+        - revslider
+        - search
+        - simplesamlphp_auth
+        # :'(
+        - webform
+      operator: 'NOT IN'
+    -
+      field: bid
+      value:
+        - 77
+        - 78
+        - 81
+        - 83
+        - 84
+        - 85
+        - 87
+      operator: 'NOT IN'
+    # -
+    #   fields:
+    #     - module
+    #     - delta
+    #   value:
+    #     node:
+    #       syndicate: node_syndicate_block
+    #   operator: 'NOT IN'
+  constants:
+    views_block_plugin_prefix: 'views_block:'
+process:
+  status:
+    -
+    # Default behavior is to skip disabled blocks, presumably because disabled
+    # blocks are different in Drupal 7 (there are a zillion of them). But, we
+    # need them, because this site uses Context to render some blocks.
+    #   plugin: skip_on_empty
+    #   method: row
+    #   source: status
+      plugin: get
+      source: status
+  id:
+    -
+      plugin: concat
+      source:
+        - theme
+        - module
+        - delta
+      delimiter: _
+    -
+      plugin: machine_name
+      field: id
+  _block_module_plugin_id:
+    -
+      plugin: static_map
+      source:
+        - module
+      map:
+        block: block
+      default_value: ''
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: migration_lookup
+      migration: upgrade_d7_custom_block
+      source:
+        - delta
+  # TO DO: Try using this variable...
+  # views_block_plugin_id:
+  #   plugin: if_condition
+  #   condition:
+  #     plugin: equals
+  #     value: views
+  #   source: module
+  #   do_process:
+  #     plugin: concat
+  #     source:
+  #       - constants/views_block_plugin_prefix
+  #       - delta
+  # dump_sourcevar1:
+  #   plugin: callback
+  #   callable: var_dump
+  #   source: '@views_block_plugin_id'
+  plugin:
+    plugin: if_condition
+    condition:
+      plugin: equals
+      value: views
+    source: module
+    do_process:
+      # plugin: default_value
+      # default_value: '@views_block_plugin_id'
+      plugin: concat
+      source:
+        - constants/views_block_plugin_prefix
+        - delta
+    else_process:
+      -
+        plugin: static_map
+        bypass: true
+        source:
+          - module
+          - delta
+        map:
+          search:
+            form: search_form_block
+          system:
+            main: system_main_block
+            powered-by: system_powered_by_block
+          user:
+            login: user_login_block
+            new: 'views_block:who_s_new-block_1'
+            online: 'views_block:who_s_online-who_s_online_block'
+      -
+        plugin: block_plugin_id
+      # Maybe uncomment this later - for now, leaving it "disabled" because I
+      # want alllll the errors.
+      # -
+      #   plugin: skip_on_empty
+      #   method: row
+  theme:
+    -
+      plugin: block_theme
+      source:
+        - theme
+        - default_theme
+        - admin_theme
+  region:
+    -
+      # Only use block_region if doing mapping.
+      plugin: block_region
+      source:
+        - theme
+        - '@theme'
+        - region
+      map:
+        # # Keeping some of this just as an example.
+        # seven:
+        #   claro:
+        #     header: header
+        #     page_top: page_top
+        #     page_bottom: page_bottom
+        cornell_cvm:
+          cornell_cvm:
+            unit-header: unit_header
+            unit-alert: unit_alert
+            unit-nav: unit_nav
+            custom-main-nav: custom_main_nav
+            sidebar-top: sidebar_top
+            sidebar-bottom: sidebar_bottom
+            hospital-mobile-links: hospital_mobile_links
+            -1: twig_tweak_blocks
+      default_value: content
+  weight:
+    -
+      plugin: get
+      source: weight
+  settings:
+    -
+      plugin: block_settings
+      source:
+        - '@plugin'
+        - delta
+        - settings
+        - title
+  _role_ids:
+    -
+      plugin: roles_lookup
+      migration: d7_user_role
+  visibility:
+    -
+      plugin: block_visibility
+      source:
+        - visibility
+        - pages
+        - roles
+      skip_php: true
+destination:
+  plugin: 'entity:block'
+migration_dependencies:
+  required: {  }
+  optional:
+    - upgrade_d7_custom_block
+    - upgrade_d7_user_role

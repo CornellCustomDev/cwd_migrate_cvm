@@ -1,0 +1,12 @@
+uuid: a1430285-5713-4cea-b124-63879066ea36
+langcode: en
+status: true
+dependencies: {  }
+id: cornell_cvm_unused
+label: 'Unused generated Drupal 7 migrations'
+description: 'Keeping for now "just in case" because regenerating is a pain.'
+source_type: 'Drupal 7'
+module: null
+shared_configuration:
+  source:
+    key: migrate

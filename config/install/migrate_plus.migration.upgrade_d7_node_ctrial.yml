@@ -1,0 +1,127 @@
+uuid: e1bbc313-ce2e-4e6b-bfa1-21f418536ac2
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_ctrial
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_nodes
+label: 'Nodes (Clinical trials)'
+source:
+  plugin: d7_node
+  node_type: ctrial
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_ctrial/0/status:
+    -
+      plugin: get
+      source: comment
+  field_diagnosis:
+    -
+      plugin: sub_process
+      source: field_diagnosis
+      process:
+        target_id: tid
+  field_featured:
+    -
+      plugin: get
+      source: field_featured
+  field_hospital:
+    -
+      plugin: sub_process
+      source: field_hospital
+      process:
+        target_id: tid
+  field_image:
+    -
+      plugin: sub_process
+      source: field_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_location_other:
+    -
+      plugin: get
+      source: field_location_other
+  field_locked_for_migration:
+    -
+      plugin: sub_process
+      source: field_locked_for_migration
+      process:
+        target_id: tid
+  field_service_area:
+    -
+      plugin: sub_process
+      source: field_service_area
+      process:
+        target_id: tid
+  field_species:
+    -
+      plugin: sub_process
+      source: field_species
+      process:
+        target_id: tid
+destination:
+  plugin: 'entity:node'
+  default_bundle: ctrial
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance

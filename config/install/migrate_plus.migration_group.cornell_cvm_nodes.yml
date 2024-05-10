@@ -1,0 +1,74 @@
+uuid: fa8e49d7-0b2e-4f1d-9c75-83817df833b9
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - cornell_cvm
+      - migrate_drupal
+      - migrate_plus
+      - migrate_tools
+id: cornell_cvm_nodes
+label: 'Node content migrations'
+description: 'Shared plugins and configurations for nodes.'
+source_type: 'Drupal 7'
+module: null
+shared_configuration:
+  source:
+    key: migrate
+  process:
+    # Disable pathauto, because we have to.
+    'path/pathauto':
+      -
+        plugin: default_value
+        default_value: 0
+    # Process all rich text fields that are on > 1 content type.
+    body/value:
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_absolute_path_fixes
+        source: body/0/value
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_linkit_rel_paths
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_placeholder_alts
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_theme_image_paths
+    body/format:
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_format_mapping
+        source: body/0/format
+    body/summary: body/0/summary
+    field_summary/value:
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_absolute_path_fixes
+        source: field_summary/0/value
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_linkit_rel_paths
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_placeholder_alts
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_theme_image_paths
+    field_summary/format:
+      -
+        plugin: snippet
+        module: cwd_migrate_cvm
+        path: formatted_text_format_mapping
+        source: field_summary/0/format

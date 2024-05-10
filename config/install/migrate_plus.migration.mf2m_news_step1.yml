@@ -1,0 +1,52 @@
+# File to Media Migration configuration for news migration
+uuid: 322870a8-20a3-435f-8dc1-e03b8afc7553
+langcode: en
+status: true
+dependencies: {  }
+id: mf2m_news_step1
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: cornell_cvm_media
+label: 'Generate media entities: news content type'
+source:
+  plugin: media_entity_generator_d7
+  entity_type: node
+  bundle: news
+  include_revisions: false
+  langcode: null
+  source_langcode: en
+  field_names:
+    - field_image
+process:
+  bundle:
+    plugin: default_value
+    default_value: image
+  # Using the alt tag if available, else the file name.
+  name:
+    plugin: media_name
+    source: file_name
+  # This process plugin will skip the whole row if a existing media is found.
+  existing_media_file:
+    plugin: check_media_duplicate
+    source: target_id
+  # This process plugin will skip the whole row if a duplicate image is found.
+  unique_file_id:
+    plugin: check_duplicate
+    source: target_id
+  # Map the field image
+  field_media_image/target_id: target_id
+  field_media_image/alt: image_alt
+  field_caption/value: caption_value
+  field_caption/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: caption_format
+  langcode: langcode
+  uid: uid
+destination:
+  plugin: 'entity:media'
+migration_dependencies: null

@@ -1,0 +1,191 @@
+uuid: 47496e14-70f9-48fa-91d3-5d9f4ffbd2a2
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_phd_dissertation_award
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: cornell_cvm_nodes
+label: 'Nodes (PhD Dissertation Award)'
+source:
+  plugin: d7_node
+  node_type: phd_dissertation_award
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_phd_dissertation_award/0/status:
+    -
+      plugin: get
+      source: comment
+  field_abstract/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_abstract/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_abstract/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_abstract/0/format
+  field_committee_member_1:
+    -
+      plugin: get
+      source: field_committee_member_1
+  field_committee_member_2:
+    -
+      plugin: get
+      source: field_committee_member_2
+  field_committee_member_3:
+    -
+      plugin: get
+      source: field_committee_member_3
+  field_committee_member_4:
+    -
+      plugin: get
+      source: field_committee_member_4
+  field_committee_member_5:
+    -
+      plugin: get
+      source: field_committee_member_5
+  field_degree_conferral_date:
+    -
+      plugin: sub_process
+      source: field_degree_conferral_date
+      process:
+        value:
+          plugin: format_date
+          from_format: 'Y-m-d H:i:s'
+          to_format: Y-m-d
+          source: value
+  field_dissertation_co_pi:
+    -
+      plugin: get
+      source: field_dissertation_co_pi
+  field_faculty_member_special_com:
+    -
+      plugin: field_link
+      source: field_faculty_member_special_com
+  field_principal_investigator_2:
+    -
+      plugin: field_link
+      source: field_principal_investigator_2
+  field_publications/value:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_absolute_path_fixes
+      source: field_publications/0/value
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_linkit_rel_paths
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_placeholder_alts
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_theme_image_paths
+  field_publications/format:
+    -
+      plugin: snippet
+      module: cwd_migrate_cvm
+      path: formatted_text_format_mapping
+      source: field_publications/0/format
+  field_student_concentration:
+    -
+      plugin: get
+      source: field_student_concentration
+  field_student_image:
+    -
+      plugin: sub_process
+      source: field_student_image
+      process:
+        target_id: fid
+        alt: alt
+        title: title
+        width: width
+        height: height
+  field_student_last_name:
+    -
+      plugin: get
+      source: field_student_last_name
+  field_student_name:
+    -
+      plugin: get
+      source: field_student_name
+destination:
+  plugin: 'entity:node'
+  default_bundle: phd_dissertation_award
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance

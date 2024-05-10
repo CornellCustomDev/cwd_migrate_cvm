@@ -1,0 +1,49 @@
+uuid: 2f39204b-9283-4fa1-aafe-d6e69010c634
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_menu
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Configuration
+migration_group: cornell_cvm
+label: Menus
+source:
+  plugin: menu
+  conditions:
+    -
+      field: menu_name
+      value: menu-cvbe-menu
+      operator: <>
+process:
+  id:
+    -
+      plugin: static_map
+      bypass: true
+      source: menu_name
+      map:
+        main-menu: main
+        management: admin
+        navigation: tools
+        user-menu: account
+  label:
+    -
+      plugin: get
+      source: title
+  description:
+    -
+      plugin: get
+      source: description
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: en
+destination:
+  plugin: 'entity:menu'
+migration_dependencies:
+  required: {  }
+  optional: {  }

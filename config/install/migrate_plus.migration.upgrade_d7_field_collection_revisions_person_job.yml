@@ -1,0 +1,83 @@
+uuid: 7d23b0b8-9829-43d0-b54d-62c5c6c29121
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_field_collection_revisions_person_job
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+  - 'Field Collection Revisions Content'
+migration_group: cornell_cvm_unused
+label: 'Field Collection Revisions (Person job)'
+source:
+  plugin: d7_field_collection_item_revision
+  field_name: field_person_job
+process:
+  id:
+    -
+      plugin: paragraphs_lookup
+      tags:
+        - 'Field Collection Content'
+      source: item_id
+    -
+      plugin: extract
+      index:
+        - id
+  type:
+    -
+      plugin: get
+      source: bundle
+  parent_id:
+    -
+      plugin: get
+      source: parent_id
+  parent_type:
+    -
+      plugin: get
+      source: parent_type
+  parent_field_name:
+    -
+      plugin: get
+      source: field_name
+  field_department:
+    -
+      plugin: sub_process
+      source: field_department
+      process:
+        target_id: tid
+  field_job_family_group:
+    -
+      plugin: sub_process
+      source: field_job_family_group
+      process:
+        target_id: tid
+  field_job_position_id:
+    -
+      plugin: get
+      source: field_job_position_id
+  field_location:
+    -
+      plugin: get
+      source: field_location
+  field_org_code:
+    -
+      plugin: sub_process
+      source: field_org_code
+      process:
+        target_id: tid
+  field_person_job_title:
+    -
+      plugin: get
+      source: field_person_job_title
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  new_revisions: true
+  default_bundle: person_job
+migration_dependencies:
+  required:
+    - upgrade_d7_field_collection_slides
+    - upgrade_d7_field_collection_person_job
+  optional: {  }
