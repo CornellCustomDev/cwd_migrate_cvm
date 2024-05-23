@@ -12,6 +12,9 @@
   attribute_options:
     name: href
   regex: true
+  # Hello future reader.
+  # This ⬇️ is wrong. It worked out, but this part, "[^\/]*" is wrong. Should be:
+  # ^(node\/\d+)$
   search: '/^[^\/]*(node\/\d+)$/'
   replace: '/$1'
 -
