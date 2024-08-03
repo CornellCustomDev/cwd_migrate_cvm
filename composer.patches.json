@@ -1,0 +1,16 @@
+{
+    "patches": {
+        "drupal/core" : {
+            "#3398887: fix migration update failures in certain cases": "https://git.drupalcode.org/project/drupal/-/merge_requests/5233.diff",
+            "#3069776: allow source conditions in migration yml": "https://git.drupalcode.org/project/drupal/-/merge_requests/849.diff",
+            "#3091841: hardcoded plugin IDs causing problems with block migrations, included in 10.3.x": "https://git.drupalcode.org/project/drupal/-/merge_requests/3198.diff"
+        },
+        "drupal/migrate_file_to_media": {
+            "#3399135: add support for drush 12": "https://www.drupal.org/files/issues/2023-11-14/migrate_file_to_media-drush_12_generator-3399135-4.patch"
+        },
+        "drupal/migrate_plus": {
+            "#3123534: add snippet process plugin, for reusing process YML": "https://www.drupal.org/files/issues/2022-04-13/migrate_plus-snippet_process_plugin-3123534-19.patch",
+            "#3379669, but local patch for now: allow replace with empty string": "patches/migrate_plus.allow-domstrreplace-with-empty.patch"
+        }
+    }
+}
