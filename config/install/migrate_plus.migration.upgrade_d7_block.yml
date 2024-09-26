@@ -177,6 +177,9 @@ process:
             sidebar-top: sidebar_top
             sidebar-bottom: sidebar_bottom
             hospital-mobile-links: hospital_mobile_links
+            # "-1" is the "region" for Drupal 7's disabled blocks.
+            # Put all disabled blocks in a non-rendered region (we have one that
+            # we only use for rendering bocks via twig_tweak, thus the name).
             -1: twig_tweak_blocks
       default_value: content
   weight:
